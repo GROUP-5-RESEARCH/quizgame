@@ -349,7 +349,9 @@
       document.getElementById('menu-screen').classList.add('hidden');
       document.getElementById('quiz-screen').classList.remove('hidden');
       document.getElementById('results-screen').classList.add('hidden');
-      
+
+      console.log(questions);
+        
       displayQuestion();
     }
 
@@ -577,6 +579,7 @@
 
     // Initialize on page load
     loadUsers();
+
 
 
 
