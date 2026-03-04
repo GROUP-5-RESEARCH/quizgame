@@ -1,4 +1,5 @@
-@keyframes slideIn {
+
+    @keyframes slideIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
@@ -28,7 +29,7 @@
     .progress-bar {
       transition: width 0.5s ease;
     }
-    input, textarea, select {
+    input, textarea {
       color-scheme: dark;
     }
     .rank-badge {
@@ -41,9 +42,3 @@
       font-size: 28px;
       font-weight: bold;
     }
-
-      /* Makes the timer blink red when time is below 5 seconds */
-      .timer-low {
-        color: #ff4d4d !important;
-        animation: pulse 0.5s infinite;
-      }
