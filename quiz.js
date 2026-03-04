@@ -354,52 +354,54 @@
     }
 
     function displayQuestion() {
-    const q = questions[currentQuestion];
-    answered = false;
+  const q = questions[currentQuestion];
+  if (!q) return; // Stop if no question exists
 
-    // Safety: Clear any existing timer before starting a new one
-    if (typeof timerInterval !== 'undefined') {
-        clearInterval(timerInterval);
-    }
-    
-    // Check if startTimer exists before calling it
-    if (typeof startTimer === "function") {
-        startTimer();
-    }
+  answered = false;
+  
+  // 1. Reset and Start Timer
+  clearInterval(timerInterval);
+  startTimer();
 
-    // Now, show the question content
-    const questionText = document.getElementById('question-text');
-    if (questionText) {
-        questionText.textContent = q.question;
-    }
-      
-      // NEW: Reset and Start the timer
-      clearInterval(timerInterval);
-      startTimer();
-    
-      document.getElementById('question-counter').textContent = `Question ${currentQuestion + 1}/${questions.length}`;
-      document.getElementById('score-display').textContent = score;
-      document.getElementById('progress-bar').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
-      document.getElementById('category-badge').textContent = q.category;
-      document.getElementById('question-text').textContent = q.question;
-      
-      document.getElementById('feedback-container').classList.add('hidden');
-      
-      const container = document.getElementById('options-container');
-      container.innerHTML = q.options.map((option, index) => `
-        <button 
-          data-option="${index}"
-          onclick="selectAnswer(${index})"
-          class="option-btn w-full p-3 sm:p-4 text-left rounded-lg transition-all"
-          style="background: rgba(241, 241, 241, 0.05); border: 2px solid rgba(233, 69, 96, 0.3); color: #f1f1f1;"
-        >
-          <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg mr-3 font-bold" style="background: rgba(233, 69, 96, 0.3); color: #e94560;">
-            ${String.fromCharCode(65 + index)}
-          </span>
-          ${option}
-        </button>
-      `).join('');
-    }
+  // 2. Safe UI Updates (Checks if ID exists before trying to change it)
+  const counter = document.getElementById('question-counter');
+  if (counter) counter.textContent = `Question ${currentQuestion + 1}/${questions.length}`;
+
+  const scoreDisp = document.getElementById('score-display');
+  if (scoreDisp) scoreDisp.textContent = score;
+
+  const progBar = document.getElementById('progress-bar');
+  if (progBar) progBar.style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+
+  const catBadge = document.getElementById('category-badge');
+  if (catBadge) catBadge.textContent = q.category;
+
+  const qText = document.getElementById('question-text');
+  if (qText) qText.textContent = q.question;
+  
+  // 3. Hide feedback
+  const feedback = document.getElementById('feedback-container');
+  if (feedback) feedback.classList.add('hidden');
+  
+  // 4. Render Options
+  const container = document.getElementById('options-container');
+  if (container) {
+    container.innerHTML = q.options.map((option, index) => `
+      <button 
+        data-option="${index}"
+        onclick="selectAnswer(${index})"
+        class="option-btn w-full p-4 text-left rounded-xl transition-all"
+        style="background: rgba(241, 241, 241, 0.05); border: 2px solid rgba(233, 69, 96, 0.3); color: #f1f1f1;"
+      >
+        <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg mr-3 font-bold" style="background: rgba(233, 69, 96, 0.3); color: #e94560;">
+          ${String.fromCharCode(65 + index)}
+        </span>
+        ${option}
+      </button>
+    `).join('');
+  }
+}
+
 
 
     function selectAnswer(index) {
@@ -575,6 +577,7 @@
 
     // Initialize on page load
     loadUsers();
+
 
 
 
