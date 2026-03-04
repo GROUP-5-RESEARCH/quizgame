@@ -385,47 +385,45 @@
     function selectAnswer(index) {
       if (answered) return;
       answered = true;
+      clearInterval(timerInterval); // Stop the clock!
       
       const q = questions[currentQuestion];
       const isCorrect = index === q.correct;
-      const buttons = document.querySelectorAll('[data-option]');
-      
-      buttons.forEach((btn, i) => {
-        btn.disabled = true;
-        if (i === q.correct) {
-          btn.style.background = '#4ade80';
-          btn.style.borderColor = '#4ade80';
-          btn.style.color = '#1a1a2e';
-          btn.classList.add('correct');
-        } else if (i === index && !isCorrect) {
-          btn.style.background = '#f87171';
-          btn.style.borderColor = '#f87171';
-          btn.style.color = '#1a1a2e';
-          btn.classList.add('wrong', 'animate-shake');
-        }
-      });
       
       if (isCorrect) {
         score++;
-        document.getElementById('score-display').textContent = score;
-        document.getElementById('score-display').parentElement.classList.add('animate-pulse-once');
+        streak++; // Add to streak
+      } else {
+        streak = 0; // Reset streak on wrong answer
       }
       
-      const feedbackContainer = document.getElementById('feedback-container');
+      const buttons = document.querySelectorAll('[data-option]');
+      buttons.forEach((btn, i) => {
+        btn.disabled = true;
+        if (i === q.correct) {
+          btn.style.background = '#4ade80'; // Green for correct
+          btn.style.color = '#1a1a2e';
+        } else if (i === index && !isCorrect) {
+          btn.style.background = '#f87171'; // Red for wrong
+          btn.style.color = '#1a1a2e';
+        }
+      });
+    
       const feedbackMessage = document.getElementById('feedback-message');
       
-      feedbackMessage.textContent = isCorrect ? 'Correct! 🎉' : 'Oops! Wrong answer 😅';
-      feedbackMessage.style.color = isCorrect ? '#4ade80' : '#f87171';
-      
-      const nextBtn = document.getElementById('next-btn');
-      if (currentQuestion === questions.length - 1) {
-        nextBtn.textContent = 'See Results 🏆';
+      // Custom feedback for streaks
+      if (index === -1) {
+        feedbackMessage.textContent = "Time's up! ⏰";
+      } else if (streak >= 3 && isCorrect) {
+        feedbackMessage.textContent = `🔥 ${streak} STREAK!`;
       } else {
-        nextBtn.textContent = 'Next Question →';
+        feedbackMessage.textContent = isCorrect ? 'Correct! 🎉' : 'Oops! Wrong answer 😅';
       }
       
-      feedbackContainer.classList.remove('hidden');
+      feedbackMessage.style.color = isCorrect ? '#4ade80' : '#f87171';
+      document.getElementById('feedback-container').classList.remove('hidden');
     }
+
 
     function nextQuestion() {
       currentQuestion++;
@@ -547,6 +545,7 @@
 
     // Initialize on page load
     loadUsers();
+
 
 
 
