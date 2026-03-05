@@ -156,6 +156,8 @@
           Start Quiz
         </button>
         <p class="text-xs sm:text-sm opacity-70" style="color: #f1f1f1; font-family: 'Space Grotesk', sans-serif;">+10 points per correct answer</p>
+        <p class="text-xs sm:text-sm opacity-70" style="color: #f1f1f1; font-family: 'Space Grotesk', sans-serif;">+5 bonus points for 5-streak</p>
+        <p class="text-xs sm:text-sm opacity-70" style="color: #f1f1f1; font-family: 'Space Grotesk', sans-serif;">+10 bonus points for 10-streak</p>
       </div>
 
       <!-- Logout Button -->
@@ -172,9 +174,17 @@
           <button onclick="exitQuiz()" class="text-lg" style="background: none; border: none; cursor: pointer;">✕</button>
           <span id="question-counter" class="text-base sm:text-lg font-semibold" style="font-family: 'Space Grotesk', sans-serif; color: #f1f1f1;">Question 1/10</span>
         </div>
-        <div class="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full" style="background: rgba(233, 69, 96, 0.2);">
-          <span class="text-lg">⭐</span>
-          <span id="score-display" class="text-base sm:text-lg font-bold" style="font-family: 'Outfit', sans-serif; color: #e94560;">0</span>
+
+        <div class="flex flex-row items-center gap-2">
+          <div id="score-container" class="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full transition-all duration-300" style="background: rgba(233, 69, 96, 0.2);">
+            <span class="text-lg">⭐</span>
+            <span id="score-display" class="text-base sm:text-lg font-bold" style="font-family: 'Outfit', sans-serif; color: #e94560;">0</span>
+          </div>
+
+          <div id="timer-container" class="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full transition-all duration-300" style="background: rgba(241, 241, 241, 0.1);">
+            <span class="text-lg">⏰</span>
+            <span id="timer-display" class="text-base sm:text-lg font-bold" style="font-family: 'Outfit', sans-serif; color: #f1f1f1;">15s</span>
+          </div>
         </div>
       </header>
 
@@ -187,10 +197,10 @@
       <div class="flex-1 flex flex-col max-w-2xl w-full mx-auto">
         <div class="rounded-2xl sm:rounded-3xl p-4 sm:p-6 mb-4 sm:mb-6 animate-slide-in" style="background: rgba(241, 241, 241, 0.05); border: 1px solid rgba(241, 241, 241, 0.1);">
           <div id="category-badge" class="inline-block px-3 py-1 rounded-full text-xs sm:text-sm font-medium mb-3 sm:mb-4" style="background: rgba(233, 69, 96, 0.2); color: #e94560; font-family: 'Space Grotesk', sans-serif;">
-            General Knowledge
+            Practical Research
           </div>
           <h2 id="question-text" class="text-lg sm:text-2xl font-semibold leading-relaxed" style="font-family: 'Outfit', sans-serif; color: #f1f1f1;">
-            What is the capital of France?
+            What is the primary purpose of a Literature Review in research?
           </h2>
         </div>
 
@@ -226,6 +236,10 @@
             <div>
               <span class="block text-2xl sm:text-3xl font-bold" style="color: #4ade80;" id="correct-count">0</span>
               <span class="opacity-70 text-xs">Correct</span>
+            </div>
+            <div>
+              <span class="block text-2xl sm:text-3xl font-bold" style="color: #fbbf24;" id="result-streak">0</span>
+              <span class="opacity-70 text-xs">Max Streak</span>
             </div>
             <div>
               <span class="block text-2xl sm:text-3xl font-bold" style="color: #f87171;" id="wrong-count">0</span>
